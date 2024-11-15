@@ -13,7 +13,8 @@ import { useEffect } from 'react';
 //import { isIOS } from './lib/utils';
 
 import { decrease, increase } from './redux/counterSlice';
-import { error } from './redux/axiosSlice';
+//import { error } from './redux/axiosSlice';
+import axios from 'axios';
 
 function App() {
 
@@ -33,13 +34,25 @@ function App() {
     //console.log(isIOS());
     //console.log(isAndroid());
     //openMapApp(35.85963087, 139.54838276, 15);
-    dispatch(error('hogehoge'));
-    console.log('LIFF_ID:', process.env.REACT_APP_LIFF_ID);
+    //dispatch(error('hogehoge'));
+    //console.log('LIFF_ID:', process.env.REACT_APP_LIFF_ID);
+    getUsers();
   }, []);
 
   const count = useSelector((state) => state.counter.count);
   const axiosError = useSelector((state) => state.axios.error);
   const dispatch = useDispatch();
+
+  const getUsers = async () => {
+    try {
+      const response = await axios.get(
+        'https://jsonplaceholder.typicode.com/users'
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className='App'>
